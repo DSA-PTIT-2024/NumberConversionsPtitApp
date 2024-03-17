@@ -1,0 +1,40 @@
+// Copyright (C) 2021 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
+
+import QtQuick 6.2
+import NumberConversions 1.0
+import MainScreenController 1.0
+Window {
+    id: window
+    width: 500
+    height: 600
+
+    visible: true
+    maximumHeight: 600
+    maximumWidth: 500
+    title: "NumberConversions"
+
+    NumberConversionsController {
+        id: mainScreenController
+    }
+
+    Screen01 {
+        id: mainScreen
+        anchors.fill: parent
+
+        lbTitltleConversionTypes.text: mainScreenController.titleConversionType
+
+        cbbFromType.model: mainScreenController.fromTypes
+        cbbToType.model: mainScreenController.toTypes
+
+        cbbFromType.onActivated: (index) => {
+                                     mainScreenController.changeFromType(index)
+                                 }
+
+
+    }
+
+
+
+}
+
