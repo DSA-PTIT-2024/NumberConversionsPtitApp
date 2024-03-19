@@ -1,7 +1,19 @@
 #include "decimaltobinary.h"
 #include "validnumberconversions.h"
+#include <iostream>
+#include <math.h>
+using namespace std;
 DecimalToBinary::DecimalToBinary()
 {
+    double decimalNumber, integerPart, fractionalPart, intergerPart2, fractionalPart2;
+    int i = 0, p = 0, j, rem;
+    int binaryIntegerPart[100], binaryFractionalPart[100];
+    cout << "Nhap so thuc duong: ";
+    cin >> decimalNumber;
+    fractionalPart = modf(decimalNumber, &integerPart);
+    int a = int(integerPart);
+    int b = int(intergerPart2);
+    
 }
 
 std::string DecimalToBinary::ConvertIntegerPartToBinary(std::string integerPart)
@@ -12,8 +24,17 @@ std::string DecimalToBinary::ConvertIntegerPartToBinary(std::string integerPart)
     }
     else
     {
-        /*Code here*/
-        /*Nhu Tuan*/
+        while (a > 0)
+        {
+            rem = a % 2;
+            a = a / 2;
+            binaryIntegerPart[i] = rem;
+            i++;
+        }
+        for (j = i - 1; j >= 0; j--)
+        {
+            cout << binaryIntegerPart[j];
+        }
         return "";
     }
 }
@@ -26,8 +47,20 @@ std::string DecimalToBinary::ConvertFractionalPartToBinary(std::string fractiona
     }
     else
     {
-        /*Code here*/
-        /*Nhu Tuan*/
+        cout << ".";
+        while (fractionalPart > 0  && p < 5)
+            {
+                fractionalPart = fractionalPart * 2;
+                fractionalPart2 = modf(fractionalPart, &intergerPart2);
+                int b = int(intergerPart2);
+                binaryFractionalPart[p] = b;
+                p++;    
+                fractionalPart = fractionalPart2; 
+            }
+        for (int u = 0; u <= p - 1; u++)
+        {
+            cout << binaryFractionalPart[u];
+        }
         return "";
     }
 }
