@@ -4,7 +4,6 @@
 #include <string>
 #include <stack>
 #include <queue>
-
 std::string DecimalToHex::ConvertIntegerPartToHex(std::string integerPart)
 {
     if (integerPart == "0")
@@ -17,8 +16,8 @@ std::string DecimalToHex::ConvertIntegerPartToHex(std::string integerPart)
 		char m = 'A';
 	    std::stack<int> st;
 	    while (defaultintegerPart != 0) {
-			st.push(defaultintegerPart % 16);
-			defaultintegerPart /= 16;
+			st.push(defaultintegerPart % _hexBase);
+			defaultintegerPart /= _hexBase;
 	    }
 	    std::string result;
 	    while(!st.empty()){
@@ -38,7 +37,7 @@ std::string DecimalToHex::ConvertFractionalPartToHex(std::string fractionalPart,
     else
     {
         int length = fractionalPart.length();
-        long double hexadecimal = stoi(fractionalPart) * pow(10, -1*length);
+        long double hexadecimal = stoi(fractionalPart) * pow(_decimalBase, -1*length);
         int defaultPrecision = 0;
 
         if (precision != -1)
@@ -52,7 +51,7 @@ std::string DecimalToHex::ConvertFractionalPartToHex(std::string fractionalPart,
     	std::queue<int> q;
         while(hexadecimal > 0 && defaultPrecision-- > 0)
 		{
-			hexadecimal *= 16;
+			hexadecimal *= _hexBase;
 			q.push(hexadecimal);
 			if(hexadecimal >= 1)
 			{
