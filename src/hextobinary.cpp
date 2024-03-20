@@ -12,7 +12,12 @@ std::string HexToBinary::ConvertIntegerPartToBinary(std::string integerPart)
     {
         /*Code here*/
         /*Thanh Tung*/
-        return "";
+        std::string binaryIntegerPart = "";
+        for (char hexDigit : integerPart)
+        {
+            binaryIntegerPart += ConvertToBinary(hexDigit);
+        }
+        return binaryIntegerPart;
     }
 }
 
@@ -26,7 +31,16 @@ std::string HexToBinary::ConvertFractionalPartToBinary(std::string fractionalPar
     {
         /*Code here*/
         /*Thanh Tung*/
-        return "";
+        std::string binaryFractionalPart = "";
+        for (char hexDigit : fractionalPart)
+        {
+            binaryFractionalPart += ConvertToBinary(hexDigit);
+            if (binaryFractionalPart.length() >= precision)
+            {
+                break;
+            }
+        }
+        return binaryFractionalPart.substr(0, precision);
     }
 }
 
