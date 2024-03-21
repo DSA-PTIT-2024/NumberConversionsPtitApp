@@ -11,7 +11,7 @@ std::string HexToBinary::ConvertIntegerPartToBinary(std::string integerPart)
     else
     {
         /*Code here*/
-        /*Thanh Tung*/
+        /*Thanh Tung done*/
         std::string binaryIntegerPart = "";
         for (char hexDigit : integerPart)
         {
@@ -30,7 +30,7 @@ std::string HexToBinary::ConvertFractionalPartToBinary(std::string fractionalPar
     else
     {
         /*Code here*/
-        /*Thanh Tung*/
+        /*Thanh Tung done*/
         std::string binaryFractionalPart = "";
         for (char hexDigit : fractionalPart)
         {
