@@ -111,12 +111,12 @@ std::string BinaryToHex::Convert(std::string binaryNumber, int precision)
     std::string hexIntegerPart = ConvertIntegerPartToHex(integerPart);
     std::string hexFractionalPart = ConvertFractionalPartToHex(fractionalPart, precision);
 
-    if (hexFractionalPart != "")
+    if (hexFractionalPart.empty())
     {
-        return hexIntegerPart + "." + hexFractionalPart;
+        return hexIntegerPart;
     }
     else
     {
-        return hexIntegerPart;
+        return hexIntegerPart + "." + hexFractionalPart;
     }
 }

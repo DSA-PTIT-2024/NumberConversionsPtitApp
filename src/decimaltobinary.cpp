@@ -13,8 +13,15 @@ std::string DecimalToBinary::ConvertIntegerPartToBinary(std::string integerPart)
     else
     {
         /*Code here*/
-        /*Nhu Tuan*/
-        return "";
+        /*Nhu Tuan done*/
+        long long decimal = std::stoll(integerPart);
+        std::string binary;
+        while (decimal > 0)
+        {
+            binary = std::to_string(decimal % _binaryBase) + binary;
+            decimal /= _binaryBase;
+        }
+        return binary;
     }
 }
 
@@ -27,8 +34,29 @@ std::string DecimalToBinary::ConvertFractionalPartToBinary(std::string fractiona
     else
     {
         /*Code here*/
-        /*Nhu Tuan*/
-        return "";
+        /*Nhu Tuan done*/
+        long double decimal = std::stold("0." + fractionalPart);
+        std::string binary;
+        auto defaultPrecision = 0;
+
+        if (precision == -1)
+        {
+            defaultPrecision = _defaultPrecision;
+        }
+        else
+        {
+            defaultPrecision = precision;
+        }
+
+        while (decimal > 0 && defaultPrecision > 0)
+        {
+            decimal *= _binaryBase;
+            binary += std::to_string(static_cast<int>(decimal));
+            decimal -= static_cast<int>(decimal);
+            defaultPrecision--;
+        }
+
+        return binary;
     }
 }
 
@@ -45,12 +73,13 @@ std::string DecimalToBinary::Convert(std::string decimalNumber, int precision)
     auto integerBinary = ConvertIntegerPartToBinary(integerPart);
     auto fractionalBinary = ConvertFractionalPartToBinary(fractionalPart, precision);
 
-    if (fractionalBinary != "")
-    {
-        return integerBinary + "." + fractionalBinary;
-    }
-    else
+    if (fractionalBinary.empty())
     {
         return integerBinary;
     }
+    else
+    {
+        return integerBinary + "." + fractionalBinary;
+    }
+
 }
