@@ -79,12 +79,12 @@ std::string BinaryToDecimal::Convert(std::string binaryNumber, int precision)
     auto decimalIntegerPart = CovertIntegerPartToDecimal(integerPart);
     auto decimalFractionalPart = ConvertFractionalPartToDecimal(fractionalPart, precision);
 
-    if (decimalFractionalPart != "")
+    if (decimalFractionalPart.empty())
     {
-        return decimalIntegerPart + "." + decimalFractionalPart;
+        return decimalIntegerPart;
     }
     else
     {
-        return decimalIntegerPart;
+        return decimalIntegerPart + "." + decimalFractionalPart;
     }
 }
