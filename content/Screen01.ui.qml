@@ -246,6 +246,8 @@ Rectangle {
                     value: -1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
+                    font.family: "JetBrains Mono"
+                    to: 15
                     anchors.rightMargin: 0
                     from: -1
                 }
