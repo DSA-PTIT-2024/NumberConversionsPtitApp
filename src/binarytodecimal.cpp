@@ -1,21 +1,22 @@
 #include "binarytodecimal.h"
+#include "validnumberconversions.h"
+#include <math.h>
 std::string BinaryToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
 {
     if (integerPart == "0")
     {
-        return 0;
+        return "0";
     }
     else
     {
         long long decimal = 0;
         int i = 0;
-        auto defaultintegerPart = integerPart;
-        while (defaultintegerPart != "")
+        for (auto it = integerPart.rbegin(); it != integerPart.rend(); ++it, ++i)
         {
-            auto digit = defaultintegerPart.back();
-            defaultintegerPart.pop_back();
-            decimal += (digit - '0') * pow(_binaryBase, i);
-            i++;
+            if (*it == '1')
+            {
+                decimal += pow(_binaryBase, i);
+            }
         }
         return std::to_string(decimal);
     }
@@ -32,6 +33,7 @@ std::string BinaryToDecimal::ConvertFractionalPartToDecimal(std::string fraction
         auto length = fractionalPart.length();
         long double decimal = 0.0;
         auto defaultPrecision = 0;
+        std::string result;
 
         if (precision != -1)
         {
@@ -50,12 +52,10 @@ std::string BinaryToDecimal::ConvertFractionalPartToDecimal(std::string fraction
             }
         }
 
-        std::string result;
-
         while (decimal != 0 && defaultPrecision-- > 0)
         {
-            decimal *= 10;
-            result += std::to_string(static_cast<int>(decimal));
+            decimal *= _decimalBase;
+            result.append(std::to_string(static_cast<int>(decimal)));
             decimal -= static_cast<int>(decimal);
         }
 

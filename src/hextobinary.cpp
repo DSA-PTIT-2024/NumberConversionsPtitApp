@@ -1,6 +1,7 @@
 #include "hextobinary.h"
 #include "validnumberconversions.h"
 #include <stdexcept>
+#include <queue>
 
 std::string HexToBinary::ConvertIntegerPartToBinary(std::string integerPart)
 {
@@ -31,16 +32,35 @@ std::string HexToBinary::ConvertFractionalPartToBinary(std::string fractionalPar
     {
         /*Code here*/
         /*Thanh Tung done*/
-        std::string binaryFractionalPart = "";
+        std::string result = "";
+        std::queue<std::string> binaryQueue;
+        int defaultPrecision = 0;
+        int count = 0;
         for (char hexDigit : fractionalPart)
         {
-            binaryFractionalPart += ConvertToBinary(hexDigit);
-            if (binaryFractionalPart.length() >= precision)
-            {
-                break;
-            }
+            binaryQueue.push(ConvertToBinary(hexDigit));
+            count++;
         }
-        return binaryFractionalPart.substr(0, precision);
+
+        if (precision != -1)
+        {
+            defaultPrecision = precision;
+        }
+        else
+        {
+            defaultPrecision = count;
+        }
+
+        while (defaultPrecision > 0 && !binaryQueue.empty())
+        {
+            result += binaryQueue.front();
+            binaryQueue.pop();
+            defaultPrecision--;
+        }
+
+        return result;
+
+
     }
 }
 

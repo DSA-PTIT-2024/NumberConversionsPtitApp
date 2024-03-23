@@ -1,5 +1,9 @@
 #include "decimaltobinary.h"
 #include "validnumberconversions.h"
+#include <math.h>
+#include <queue>
+#include <stack>
+#include <string>
 DecimalToBinary::DecimalToBinary()
 {
 }
@@ -15,13 +19,22 @@ std::string DecimalToBinary::ConvertIntegerPartToBinary(std::string integerPart)
         /*Code here*/
         /*Nhu Tuan done*/
         long long decimal = std::stoll(integerPart);
-        std::string binary;
-        while (decimal > 0)
+        std::string result;
+        std::stack<int> remainder;
+
+        while (decimal != 0)
         {
-            binary = std::to_string(decimal % _binaryBase) + binary;
+            remainder.push(static_cast<int>(decimal % _binaryBase));
             decimal /= _binaryBase;
         }
-        return binary;
+
+        while (!remainder.empty())
+        {
+            result += std::to_string(remainder.top());
+            remainder.pop();
+        }
+
+        return result;
     }
 }
 
@@ -37,7 +50,8 @@ std::string DecimalToBinary::ConvertFractionalPartToBinary(std::string fractiona
         /*Nhu Tuan done*/
         long double decimal = std::stold("0." + fractionalPart);
         std::string binary;
-        auto defaultPrecision = 0;
+        int defaultPrecision = 0;
+        std::queue<int> remainder;
 
         if (precision == -1)
         {
@@ -48,12 +62,17 @@ std::string DecimalToBinary::ConvertFractionalPartToBinary(std::string fractiona
             defaultPrecision = precision;
         }
 
-        while (decimal > 0 && defaultPrecision > 0)
+        while (decimal != 0 && defaultPrecision-- > 0)
         {
             decimal *= _binaryBase;
-            binary += std::to_string(static_cast<int>(decimal));
-            decimal -= static_cast<int>(decimal);
-            defaultPrecision--;
+            remainder.push(static_cast<int>(decimal));
+            decimal -= remainder.back();
+        }
+
+        while (!remainder.empty())
+        {
+            binary += std::to_string(remainder.front());
+            remainder.pop();
         }
 
         return binary;
@@ -81,5 +100,4 @@ std::string DecimalToBinary::Convert(std::string decimalNumber, int precision)
     {
         return integerBinary + "." + fractionalBinary;
     }
-
 }

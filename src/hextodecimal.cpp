@@ -1,5 +1,9 @@
 #include "hextodecimal.h"
-
+#include <stack>
+#include "validnumberconversions.h"
+#include <math.h>
+#include <stdexcept>
+#include <queue>
 std::string HexToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
 {
     if (integerPart == "0")
@@ -10,14 +14,31 @@ std::string HexToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
     {
         /*Code here*/
         /*Tran Hung done*/
-        long long decimal = 0;
+        unsigned long long decimal = 0;
         int power = 0;
+        std::stack<char> integerPartStack;
+        std::string result;
         for (int i = integerPart.size() - 1; i >= 0; i--)
         {
-            decimal += ConvertToDecimal(integerPart[i]) * pow(_hexadecimalBase, power);
+            decimal += ConvertToDecimal(integerPart[i]) * std::pow(_hexadecimalBase, power);
             power++;
         }
-        return std::to_string(decimal);
+
+        while (decimal != 0)
+        {
+            integerPartStack.push(static_cast<char>(decimal % _decimalBase));
+            decimal /= _decimalBase;
+        }
+
+        while (!integerPartStack.empty())
+        {
+            result += std::to_string(integerPartStack.top());
+            integerPartStack.pop();
+        }
+
+        return result;
+
+
     }
 }
 
@@ -33,38 +54,46 @@ std::string HexToDecimal::ConvertFractionalPartToDecimal(std::string fractionalP
         /*Tran Hung done*/
         size_t length = fractionalPart.size();
         long double decimal = 0.0;
-        auto defaultPrecision = 0;
+        int defaultPrecision = 0;
         std::string result;
+        std::queue<char> fractionalPartQueue;
 
-        for (auto i = 0; i < length; ++i)
+
+
+        for (int i = 0; i < length; i++)
         {
-            decimal += ConvertToDecimal(fractionalPart[i]) * pow(_hexadecimalBase, static_cast<long long>(-i - 1));
+            decimal += ConvertToDecimal(fractionalPart[i]) * std::pow(_hexadecimalBase, static_cast<long long>(-i - 1));
         }
 
         if (precision != -1)
         {
-            defaultPrecision = precision;
+            while (decimal != 0 && defaultPrecision-- > 0)
+            {
+                decimal *= _decimalBase;
+                fractionalPartQueue.push(static_cast<char>(decimal));
+                decimal -= static_cast<int>(decimal);
+            }
         }
         else
         {
             while (decimal != 0)
             {
                 decimal *= _decimalBase;
-                result += std::to_string(static_cast<int>(decimal));
+                fractionalPartQueue.push(static_cast<char>(decimal));
                 decimal -= static_cast<int>(decimal);
             }
-
-            return result;
         }
 
-        while (decimal != 0 && defaultPrecision-- > 0)
+        while (!fractionalPartQueue.empty())
         {
-            decimal *= _decimalBase;
-            result += std::to_string(static_cast<int>(decimal));
-            decimal -= static_cast<int>(decimal);
+            result += std::to_string(fractionalPartQueue.front());
+            fractionalPartQueue.pop();
         }
 
         return result;
+
+
+
     }
 }
 

@@ -3,7 +3,6 @@
 
 #include "numberconversionsstrategy.h"
 
-#include <string>
 class BinaryToHex : public NumberConversionsStrategy
 {
   private:

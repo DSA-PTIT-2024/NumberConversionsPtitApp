@@ -1,9 +1,9 @@
 #include "decimaltohex.h"
 #include <math.h>
-#include <regex>
-#include <string>
-#include <stack>
 #include <queue>
+#include <regex>
+#include <stack>
+#include <string>
 std::string DecimalToHex::ConvertIntegerPartToHex(std::string integerPart)
 {
     if (integerPart == "0")
@@ -14,16 +14,19 @@ std::string DecimalToHex::ConvertIntegerPartToHex(std::string integerPart)
     {
         /*Code here*/
         /*Chi Thinh done*/
-        auto defaultintegerPart = stoll(integerPart);
-        std::stack<long long> st;
-        while (defaultintegerPart != 0) {
-            st.push(defaultintegerPart % _hexBase);
-            defaultintegerPart /= _hexBase;
-        }
+        auto decimal = std::stoll(integerPart);
+        std::stack<long long> remainder;
         std::string result;
-        while(!st.empty()){
-            result += ConvertToHex(st.top());
-            st.pop();
+        while (decimal != 0)
+        {
+            remainder.push(static_cast<int>(decimal % _hexBase));
+            decimal /= _hexBase;
+        }
+
+        while (!remainder.empty())
+        {
+            result += ConvertToHex(remainder.top());
+            remainder.pop();
         }
         return result;
     }
@@ -39,9 +42,12 @@ std::string DecimalToHex::ConvertFractionalPartToHex(std::string fractionalPart,
     {
         /*Code here*/
         /*Chi Thinh done*/
-        long long length = fractionalPart.length();
-        auto hexadecimal = std::stold(std::string("0." + fractionalPart));
+        auto length = fractionalPart.length();
+        auto decimal = std::stold(std::string("0." + fractionalPart));
         int defaultPrecision = 0;
+        std::queue<int> remainder;
+        std::string result;
+
 
         if (precision != -1)
         {
@@ -51,22 +57,22 @@ std::string DecimalToHex::ConvertFractionalPartToHex(std::string fractionalPart,
         {
             defaultPrecision = _defaultPrecision;
         }
-        std::queue<int> q;
-        while(hexadecimal > 0 && defaultPrecision-- > 0)
+
+        while (decimal > 0 && defaultPrecision-- > 0)
         {
-            hexadecimal *= _hexBase;
-            q.push(hexadecimal);
-            hexadecimal -= q.back();
+            decimal *= _hexBase;
+            remainder.push(decimal);
+            decimal -= remainder.back();
         }
-        std::string result;
-        while(!q.empty())
+
+        while (!remainder.empty())
         {
-            result += ConvertToHex(q.front());
-            q.pop();
+            result += ConvertToHex(remainder.front());
+            remainder.pop();
         }
+
         return result;
     }
-
 }
 
 /*helpfull function*/
