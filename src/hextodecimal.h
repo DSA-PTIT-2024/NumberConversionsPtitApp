@@ -2,9 +2,6 @@
 #define HEXTODECIMAL_H
 
 #include "numberconversionsstrategy.h"
-#include "validnumberconversions.h"
-#include <math.h>
-#include <stdexcept>
 #include <string>
 class HexToDecimal : public NumberConversionsStrategy
 {

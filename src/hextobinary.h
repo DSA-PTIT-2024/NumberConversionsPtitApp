@@ -14,13 +14,13 @@ class HexToBinary : public NumberConversionsStrategy
     const int _defaultPrecision = 10;
 
     std::string ConvertIntegerPartToBinary(std::string integerPart);
-    std::string ConvertFractionalPartToBinary(std::string fractionalPart, int precision = 0);
+    std::string ConvertFractionalPartToBinary(std::string fractionalPart, int precision);
 
     std::string ConvertToBinary(char hexDigit);
 
   public:
     HexToBinary();
-    std::string Convert(std::string hexNumber, int precision = 0) override;
+    std::string Convert(std::string hexNumber, int precision) override;
     int GetFromBase() override
     {
         return _hexBase;

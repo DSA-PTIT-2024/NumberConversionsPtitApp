@@ -1,8 +1,6 @@
 #ifndef DECIMALTOBINARY_H
 #define DECIMALTOBINARY_H
 #include "numberconversionsstrategy.h"
-#include <math.h>
-#include <regex>
 #include <string>
 class DecimalToBinary : public NumberConversionsStrategy
 {

@@ -2,7 +2,7 @@
 #include "validnumberconversions.h"
 #include <math.h>
 #include <stdexcept>
-
+#include <queue>
 std::string BinaryToHex::ConvertIntegerPartToHex(std::string integerPart)
 {
     if (integerPart == "0")
@@ -12,24 +12,39 @@ std::string BinaryToHex::ConvertIntegerPartToHex(std::string integerPart)
     else
     {
         std::string hex;
-
-        std::string paddedIntegerPart = integerPart;
-        int length = integerPart.size();
-        int padding = length % 4;
+        std::queue<char> makeGroup;
+        auto length = integerPart.size();
+        auto padding = length % 4;
 
         if (padding != 0)
         {
-            paddedIntegerPart = std::string(4 - padding, '0') + integerPart;
-            length = paddedIntegerPart.size();
+            int paddingSize = 4 - padding;
+            for (size_t i = 0; i < paddingSize; i++)
+            {
+                makeGroup.push('0');
+            }
+
+            length += paddingSize - 2;
         }
 
-        for (int i = 0; i < length; i += 4)
+        for (size_t i = 0; i < length; i++)
         {
-            std::string binaryDigit = paddedIntegerPart.substr(i, 4);
+            makeGroup.push(integerPart[i]);
+        }
+
+        while (!makeGroup.empty())
+        {
+            std::string binaryDigit = "";
+            for (size_t i = 0; i < 4; i++)
+            {
+                binaryDigit += makeGroup.front();
+                makeGroup.pop();
+            }
             hex += ConvertToHex(binaryDigit);
         }
 
         return hex;
+
     }
 }
 
@@ -42,21 +57,36 @@ std::string BinaryToHex::ConvertFractionalPartToHex(std::string fractionalPart, 
     else
     {
         std::string hex;
+        std::queue<char> makeGroup;
+        auto length = fractionalPart.size();
+        auto padding = length % 4;
+        int defaultPrecision = 0;
 
-        std::string paddedFractionalPart = fractionalPart;
-        int length = fractionalPart.size();
-        int padding = length % 4;
-        auto defaultPrecision = 0;
+        for(size_t i = 0; i < length; i++)
+        {
+            makeGroup.push(fractionalPart[i]);
+        }
 
         if (padding != 0)
         {
-            paddedFractionalPart = fractionalPart + std::string(4 - padding, '0');
-            length = paddedFractionalPart.size();
+            int paddingSize = 4 - padding;
+
+            for (size_t i = 0; i < paddingSize; i++)
+            {
+                makeGroup.push('0');
+            }
+
+            length += paddingSize - 1;
         }
 
-        for (int i = 0; i < length; i += 4)
+        while (!makeGroup.empty())
         {
-            std::string binaryDigit = paddedFractionalPart.substr(i, 4);
+            std::string binaryDigit = "";
+            for (size_t i = 0; i < 4; i++)
+            {
+                binaryDigit += makeGroup.front();
+                makeGroup.pop();
+            }
             hex += ConvertToHex(binaryDigit);
         }
 
@@ -70,6 +100,7 @@ std::string BinaryToHex::ConvertFractionalPartToHex(std::string fractionalPart, 
         }
 
         return hex.substr(0, defaultPrecision);
+
     }
 }
 

@@ -2,8 +2,7 @@
 #define BINARYTODECIMAL_H
 
 #include "numberconversionsstrategy.h"
-#include "validnumberconversions.h"
-#include <math.h>
+
 class BinaryToDecimal : public NumberConversionsStrategy
 {
   private:
