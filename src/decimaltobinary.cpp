@@ -18,7 +18,7 @@ std::string DecimalToBinary::ConvertIntegerPartToBinary(std::string integerPart)
     {
         /*Code here*/
         /*Nhu Tuan done*/
-        long long decimal = std::stoll(integerPart);
+        unsigned long long decimal = std::stoull(integerPart);
         std::string result;
         std::stack<int> remainder;
 

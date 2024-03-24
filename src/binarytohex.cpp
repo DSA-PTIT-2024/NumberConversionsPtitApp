@@ -13,8 +13,7 @@ std::string BinaryToHex::ConvertIntegerPartToHex(std::string integerPart)
     {
         std::string hex;
         std::queue<char> makeGroup;
-        auto length = integerPart.size();
-        auto padding = length % 4;
+        auto padding = integerPart.size() % 4;
 
         if (padding != 0)
         {
@@ -24,12 +23,11 @@ std::string BinaryToHex::ConvertIntegerPartToHex(std::string integerPart)
                 makeGroup.push('0');
             }
 
-            length += paddingSize - 2;
         }
 
-        for (size_t i = 0; i < length; i++)
+        for(char digit : integerPart)
         {
-            makeGroup.push(integerPart[i]);
+            makeGroup.push(digit);
         }
 
         while (!makeGroup.empty())
@@ -58,13 +56,12 @@ std::string BinaryToHex::ConvertFractionalPartToHex(std::string fractionalPart, 
     {
         std::string hex;
         std::queue<char> makeGroup;
-        auto length = fractionalPart.size();
-        auto padding = length % 4;
+        auto padding = fractionalPart.size() % 4;
         int defaultPrecision = 0;
 
-        for(size_t i = 0; i < length; i++)
+        for(char digit : fractionalPart)
         {
-            makeGroup.push(fractionalPart[i]);
+            makeGroup.push(digit);
         }
 
         if (padding != 0)
@@ -75,8 +72,6 @@ std::string BinaryToHex::ConvertFractionalPartToHex(std::string fractionalPart, 
             {
                 makeGroup.push('0');
             }
-
-            length += paddingSize - 1;
         }
 
         while (!makeGroup.empty())
@@ -124,6 +119,7 @@ char BinaryToHex::ConvertToHex(std::string binaryNumber)
     {
         throw std::invalid_argument("Invalid argument for hex conversion");
     }
+
 }
 
 BinaryToHex::BinaryToHex()
