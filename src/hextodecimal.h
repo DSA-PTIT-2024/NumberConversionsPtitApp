@@ -11,12 +11,12 @@ class HexToDecimal : public NumberConversionsStrategy
     const int _defaultPrecision = 10;
 
     std::string CovertIntegerPartToDecimal(std::string integerPart);
-    std::string ConvertFractionalPartToDecimal(std::string fractionalPart, int precision = 0);
+    std::string ConvertFractionalPartToDecimal(std::string fractionalPart, int precision);
     int ConvertToDecimal(char hexDigit);
 
   public:
     HexToDecimal();
-    std::string Convert(std::string hexNumber, int precision = 0) override;
+    std::string Convert(std::string hexNumber, int precision) override;
     int GetFromBase() override
     {
         return _hexadecimalBase;

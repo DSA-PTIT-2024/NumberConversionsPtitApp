@@ -202,6 +202,7 @@ Rectangle {
                     font.capitalization: Font.AllUppercase
                     cursorVisible: false
                     Layout.fillWidth: true
+                    maximumLength: 25
                     background: Rectangle {
                         border.color: "#ced4da"
                         border.width: 1

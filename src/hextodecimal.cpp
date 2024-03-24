@@ -1,9 +1,9 @@
 #include "hextodecimal.h"
-#include <stack>
 #include "validnumberconversions.h"
 #include <math.h>
-#include <stdexcept>
 #include <queue>
+#include <stack>
+#include <stdexcept>
 std::string HexToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
 {
     if (integerPart == "0")
@@ -20,7 +20,7 @@ std::string HexToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
         std::string result;
         for (int i = integerPart.size() - 1; i >= 0; i--)
         {
-            decimal += ConvertToDecimal(integerPart[i]) * std::pow(_hexadecimalBase, power);
+            decimal += ConvertToDecimal(integerPart[i]) * pow(_hexadecimalBase, power);
             power++;
         }
 
@@ -37,8 +37,6 @@ std::string HexToDecimal::CovertIntegerPartToDecimal(std::string integerPart)
         }
 
         return result;
-
-
     }
 }
 
@@ -58,15 +56,14 @@ std::string HexToDecimal::ConvertFractionalPartToDecimal(std::string fractionalP
         std::string result;
         std::queue<char> fractionalPartQueue;
 
-
-
         for (int i = 0; i < length; i++)
         {
-            decimal += ConvertToDecimal(fractionalPart[i]) * std::pow(_hexadecimalBase, static_cast<long long>(-i - 1));
+            decimal += ConvertToDecimal(fractionalPart[i]) * pow(_hexadecimalBase, static_cast<long long>(-i - 1));
         }
 
         if (precision != -1)
         {
+            defaultPrecision = precision;
             while (decimal != 0 && defaultPrecision-- > 0)
             {
                 decimal *= _decimalBase;
@@ -91,9 +88,6 @@ std::string HexToDecimal::ConvertFractionalPartToDecimal(std::string fractionalP
         }
 
         return result;
-
-
-
     }
 }
 
